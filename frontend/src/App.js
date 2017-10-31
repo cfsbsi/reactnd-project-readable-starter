@@ -1,25 +1,38 @@
 import React, {Component} from 'react';
-import {ListGroup, ListGroupItem, Panel, Col} from 'react-bootstrap';
-import {Route, Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Route} from 'react-router-dom';
+import Category from './Category/CategoryComponent'
+import {loadCategories} from './Category/Action'
+
 
 
 class App extends Component {
+
+    componentDidMount() {
+        this.props.getCategories()
+    }
+
     render() {
         return (
             <div className="App">
                 <Route exact path="/" render={() => (
-                    <Col md="8" mdOffset="2">
-                        <Panel header="Redux">
-                            <ListGroup>
-                                <ListGroupItem>Link 1</ListGroupItem>
-                                <ListGroupItem>Link 2</ListGroupItem>
-                            </ListGroup>
-                        </Panel>
-                    </Col>
+                    <Category categories={this.props.categories}/>
                 )}/>
             </div>
         );
     }
 }
 
-export default App;
+function mapStateToProps({categories}) {
+    return {
+        categories
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getCategories: () => dispatch(loadCategories()),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
