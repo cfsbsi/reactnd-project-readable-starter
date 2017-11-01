@@ -2,8 +2,8 @@
 
 exports[`renders without crashing 1`] = `
 <App
-  categories={Array []}
   getCategories={[Function]}
+  getPosts={[Function]}
   store={
     Object {
       "clearActions": [Function],

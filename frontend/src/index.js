@@ -5,14 +5,14 @@ import {BrowserRouter} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
-import categoryReducer from './Category/Reducer';
+import rootReducer from './rootReducer';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(categoryReducer, composeEnhancers(applyMiddleware(thunk, logger)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, logger)));
 
 ReactDOM.render(
     <Provider store={store}>
