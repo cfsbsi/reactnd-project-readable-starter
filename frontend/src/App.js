@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Route} from 'react-router-dom';
 import Category from './Category/CategoryComponent'
+import Post from './Post/PostComponent'
+import CreateEditPostComponent from './Post/CreateEditPostComponent'
 import {loadCategories} from './Category/Action'
 import {loadPosts} from './Post/Action'
+import { withRouter } from 'react-router'
 
 
 class App extends Component {
@@ -22,6 +25,9 @@ class App extends Component {
                         posts={this.props.postReducer.posts}
                     />
                 )}/>
+                <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
+                <Route exact path="/posts/create" component={CreateEditPostComponent}/>
+                <Route exact path="/post/:postId" component={Post}/>
             </div>
         );
     }
@@ -38,4 +44,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

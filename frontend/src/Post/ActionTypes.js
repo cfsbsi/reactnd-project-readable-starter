@@ -1,1 +1,2 @@
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const CREATE_POST = 'CREATE_POST';
