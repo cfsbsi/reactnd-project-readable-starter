@@ -2,13 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 
-
-
 class PostComponent extends React.Component {
 
     render() {
         const selectedPost = this.props.postReducer.posts.find((post) => post.id === this.props.match.params.postId)
-        return selectedPost ? (
+        const foundPost = selectedPost && selectedPost.category ===  this.props.match.params.category;
+        return foundPost ? (
             <div>
                 <h2>Category: {selectedPost && selectedPost.category}</h2>
                 <h3>Post: {selectedPost && selectedPost.title}</h3>

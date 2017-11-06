@@ -1,4 +1,4 @@
-import {LOAD_POST_SUCCESS} from './ActionTypes'
+import {LOAD_POST_SUCCESS, UPDATE_POST} from './ActionTypes'
 
 function post(state = {posts: []}, action) {
     switch (action.type) {
@@ -6,6 +6,11 @@ function post(state = {posts: []}, action) {
             return {
                 ...state,
                 posts: action.state,
+            };
+        case UPDATE_POST :
+            return {
+                ...state,
+                postToEdit: action.state
             };
         default :
             return state

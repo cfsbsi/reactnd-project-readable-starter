@@ -1,5 +1,5 @@
-import {fetchPosts, create} from './Api';
-import {LOAD_POST_SUCCESS, CREATE_POST} from './ActionTypes'
+import {fetchPosts, create, findPost} from './Api';
+import {LOAD_POST_SUCCESS, CREATE_POST, UPDATE_POST} from './ActionTypes'
 
 export function loadPosts() {
     return function (dispatch) {
@@ -27,4 +27,18 @@ export function createPost(body) {
 
 export function createPostSuccess(state) {
     return {type: CREATE_POST, state}
+}
+
+export function getPost(postId) {
+    return function(dispatch) {
+        findPost(postId).then(post => {
+            dispatch(updatePost(post))
+        }).catch(error => {
+            throw(error);
+        });
+    }
+}
+
+export function updatePost(state) {
+    return {type: UPDATE_POST, state};
 }

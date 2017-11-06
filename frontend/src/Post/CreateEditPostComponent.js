@@ -1,12 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {createPost} from './Action';
+import {createPost, getPost} from './Action';
 import serializeForm from 'form-serialize';
 
 class CreateEditPostComponent extends React.Component {
 
     componentDidMount() {
         this.setState({pageTitle: this.getPageTitle()})
+
+        this.props.getPost(this.props.match.params.postId);
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState(nextProps.postToEdit);
     }
 
     constructor(props) {
@@ -18,7 +24,8 @@ class CreateEditPostComponent extends React.Component {
             id: (Math.floor((Math.random() * 1000000) + 1)).toString(),
             timestamp: new Date().getTime(),
             pageTitle: 'Edit Post',
-            category: 'react'
+            category: 'react',
+            postNotFound: this.postNotFound()
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,8 +68,28 @@ class CreateEditPostComponent extends React.Component {
         }
     }
 
+    postNotFound = () => {
+
+        if (this.props.location.pathname === '/posts/create') {
+            return false;
+        }
+
+        const postFound = this.props.postReducer.posts.find(post => post.id === this.props.match.params.postId.toString());
+
+        return postFound ? false : true;
+
+    }
+
     render() {
-        return (
+        if (!this.props.postReducer.posts || this.props.postReducer.posts.length === 0) {
+            return null;
+        }
+
+        return this.props.postNotFound ? (
+            <div>
+                <h1>Post not found</h1>
+            </div>
+        ) : (
             <div>
                 <h1>{this.state.pageTitle}</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -94,12 +121,13 @@ class CreateEditPostComponent extends React.Component {
 }
 
 function mapStateToProps({categoryReducer, postReducer}) {
-    return {categoryReducer, postReducer}
+    return {categoryReducer, postReducer, postToEdit: postReducer.postToEdit}
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        postPost: (post) => dispatch(createPost(post))
+        postPost: (post) => dispatch(createPost(post)),
+        getPost: (postId) => dispatch(getPost(postId))
     };
 }
 

@@ -27,7 +27,7 @@ class App extends Component {
                 )}/>
                 <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
                 <Route exact path="/posts/create" component={CreateEditPostComponent}/>
-                <Route exact path="/post/:postId" component={Post}/>
+                <Route exact path="/:category/:postId" component={Post}/>
             </div>
         );
     }
