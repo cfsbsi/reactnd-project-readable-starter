@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 import {Panel, Col} from 'react-bootstrap';
 
@@ -15,7 +16,14 @@ class CategoryComponent extends React.Component {
                                 this.props.posts.filter((post) => post.category === category.name)
                                     .map((post, index) => (
                                     <div key={index}>
-                                        <h3>{post.title}</h3>
+                                        <Link to={`${post.category}/${post.id}`}>
+                                            <h3>{post.title}</h3>
+                                        </Link>
+                                        <span onClick={() => this.props.like(post)} className="glyphicon glyphicon-thumbs-up"></span>
+                                        <span onClick={() => this.props.dislike(post)} className="glyphicon glyphicon-thumbs-down"></span>
+                                        <p>author: {post.author}</p>
+                                        <p>comments: {post.commentCount}</p>
+                                        <p>voteScore: {post.voteScore}</p>
                                     </div>
                                 ))}
                             </Panel>

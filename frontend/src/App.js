@@ -5,7 +5,7 @@ import Category from './Category/CategoryComponent'
 import Post from './Post/PostComponent'
 import CreateEditPostComponent from './Post/CreateEditPostComponent'
 import {loadCategories} from './Category/Action'
-import {loadPosts} from './Post/Action'
+import {loadPosts, likePost, dislikePost} from './Post/Action'
 import { withRouter } from 'react-router'
 
 
@@ -16,11 +16,21 @@ class App extends Component {
         this.props.getPosts();
     }
 
+    like = (post) => {
+        this.props.likePost(post);
+    }
+
+    dislike = (post) => {
+        this.props.dislikePost(post);
+    }
+
     render() {
         return (
             <div className="App">
                 <Route exact path="/" render={() => (
                     <Category
+                        like={this.like}
+                        dislike={this.dislike}
                         categories={this.props.categoryReducer.categories}
                         posts={this.props.postReducer.posts}
                     />
@@ -40,7 +50,9 @@ function mapStateToProps({categoryReducer, postReducer}) {
 function mapDispatchToProps(dispatch) {
     return {
         getCategories: () => dispatch(loadCategories()),
-        getPosts: () => dispatch(loadPosts())
+        getPosts: () => dispatch(loadPosts()),
+        likePost: (postId) => dispatch(likePost(postId)),
+        dislikePost: (postId) => dispatch(dislikePost(postId))
     };
 }
 
