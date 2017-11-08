@@ -44,7 +44,6 @@ export function addPostToEdit(state) {
 }
 
 export function updatePost(state) {
-    console.log(state);
     return {type: UPDATE_POST, state};
 }
 

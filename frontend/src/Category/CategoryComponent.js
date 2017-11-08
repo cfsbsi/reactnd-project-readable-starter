@@ -4,8 +4,16 @@ import {Link} from 'react-router-dom'
 import {Panel, Col} from 'react-bootstrap';
 
 class CategoryComponent extends React.Component {
+
+    containsCategories = (categories)  => {
+        if(categories && categories.length > 0 && categories[0] !== undefined){
+            return true;
+        }
+        return false;
+    }
+
     render() {
-        return (
+        return this.containsCategories(this.props.categories)?(
             <div>
                 {this.props.categories && this.props.categories.map((category, index) => (
                     <div key={index}>
@@ -30,6 +38,10 @@ class CategoryComponent extends React.Component {
                         </Col>
                     </div>
                 ))}
+            </div>
+        ):(
+            <div>
+                <h1>Category not found!</h1>
             </div>
         )
     }

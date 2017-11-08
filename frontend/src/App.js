@@ -6,7 +6,7 @@ import Post from './Post/PostComponent'
 import CreateEditPostComponent from './Post/CreateEditPostComponent'
 import {loadCategories} from './Category/Action'
 import {loadPosts, likePost, dislikePost} from './Post/Action'
-import { withRouter } from 'react-router'
+import {withRouter} from 'react-router'
 
 
 class App extends Component {
@@ -38,6 +38,14 @@ class App extends Component {
                 <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
                 <Route exact path="/posts/create" component={CreateEditPostComponent}/>
                 <Route exact path="/:category/:postId" component={Post}/>
+                <Route exact path="/:category" render={({match}) => (
+                    <Category
+                        like={this.like}
+                        dislike={this.dislike}
+                        categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
+                        posts={this.props.postReducer.posts.filter(post => post.category === match.params.category)}
+                    />
+                )}/>
             </div>
         );
     }
