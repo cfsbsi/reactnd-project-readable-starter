@@ -113,7 +113,7 @@ class CreateEditPostComponent extends React.Component {
                         <textarea name="body" value={this.state.body} onChange={this.handleInputChange}/>
                     </label>
                     <br/>
-                    <input type="submit" value="Submit"/>
+                    <input type="submit" value="Save"/>
                 </form>
             </div>
         )

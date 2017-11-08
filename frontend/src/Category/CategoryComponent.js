@@ -32,6 +32,13 @@ class CategoryComponent extends React.Component {
                                         <p>author: {post.author}</p>
                                         <p>comments: {post.commentCount}</p>
                                         <p>voteScore: {post.voteScore}</p>
+                                        <Link to={`/posts/edit/${post.id}`}>
+                                            <button className="btn btn-default">edit</button>
+                                        </Link>
+                                        <button className="btn btn-default">
+                                            delete
+                                        </button>
+
                                     </div>
                                 ))}
                             </Panel>
