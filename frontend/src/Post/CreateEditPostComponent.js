@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {createPost, getPost} from './Action';
-import serializeForm from 'form-serialize';
 
 class CreateEditPostComponent extends React.Component {
 
@@ -34,9 +33,6 @@ class CreateEditPostComponent extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log('event.target');
-        console.log(serializeForm(event.target, {hash: true}));
-        console.log(this.state);
         this.createPost(this.state)
         this.setState({
             title: '',
@@ -114,6 +110,7 @@ class CreateEditPostComponent extends React.Component {
                     </label>
                     <br/>
                     <input type="submit" value="Save"/>
+                    <button onClick={this.props.history.goBack}>Back</button>
                 </form>
             </div>
         )
