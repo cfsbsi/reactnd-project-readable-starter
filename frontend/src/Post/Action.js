@@ -1,4 +1,4 @@
-import {fetchPosts, create, findPost} from './Api';
+import {fetchPosts, create, findPost, delet, vote} from './Api';
 import {LOAD_POST_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT} from './ActionTypes'
 
 export function loadPosts() {
@@ -48,10 +48,35 @@ export function updatePost(state) {
 }
 
 export function likePost(post) {
-    return updatePost({...post, voteScore: ++post.voteScore})
+    return function (dispatch){
+        vote(post.id, {option: 'upVote'}).then(
+            () => dispatch(updatePost({...post, voteScore: ++post.voteScore}))
+        ).catch(error => {
+            throw(error);
+        });
+    }
 }
 
-
 export function dislikePost(post) {
-    return updatePost({...post, voteScore: --post.voteScore})
+    return function (dispatch){
+        vote(post.id, {option: 'downVote'}).then(
+            () => dispatch(updatePost({...post, voteScore: --post.voteScore}))
+        ).catch(error => {
+            throw(error);
+        });
+    }
+}
+
+export function deletePost(post) {
+    return function (dispatch) {
+        delet(post.id).then(post => {
+            dispatch(deletePostSuccess(post))
+        }).catch(error => {
+            throw(error);
+        });
+    }
+}
+
+export function deletePostSuccess(post) {
+    return updatePost({...post, deleted: true})
 }

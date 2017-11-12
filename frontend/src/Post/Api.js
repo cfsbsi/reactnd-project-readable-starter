@@ -27,3 +27,18 @@ export function findPost(postId) {
     return fetch(`http://${url}/posts/${postId}`, {headers})
         .then((res) => res.json())
 }
+
+export function delet(postId) {
+    return fetch(`http://${url}/posts/${postId}`, {
+        method: 'DELETE',
+        headers
+    }).then(res => res.json());
+}
+
+export function vote(postId, body) {
+    return fetch(`http://${url}/posts/${postId}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body)
+    }).then(res => res.json());
+}

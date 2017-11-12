@@ -5,7 +5,7 @@ import Category from './Category/CategoryComponent'
 import Post from './Post/PostComponent'
 import CreateEditPostComponent from './Post/CreateEditPostComponent'
 import {loadCategories} from './Category/Action'
-import {loadPosts, likePost, dislikePost} from './Post/Action'
+import {loadPosts, likePost, dislikePost, deletePost} from './Post/Action'
 import {withRouter} from 'react-router'
 
 
@@ -24,6 +24,10 @@ class App extends Component {
         this.props.dislikePost(post);
     }
 
+    delete = (post) => {
+        this.props.deletePost(post);
+    }
+
     render() {
         return (
             <div className="App">
@@ -32,7 +36,8 @@ class App extends Component {
                         like={this.like}
                         dislike={this.dislike}
                         categories={this.props.categoryReducer.categories}
-                        posts={this.props.postReducer.posts}
+                        posts={this.props.postReducer.posts.filter(post => post.deleted === false)}
+                        delete={this.delete}
                     />
                 )}/>
                 <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
@@ -43,7 +48,10 @@ class App extends Component {
                         like={this.like}
                         dislike={this.dislike}
                         categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
-                        posts={this.props.postReducer.posts.filter(post => post.category === match.params.category)}
+                        posts={this.props.postReducer.posts
+                            .filter(post => post.deleted === false)
+                            .filter(post => post.category === match.params.category)}
+                        delete={this.delete}
                     />
                 )}/>
             </div>
@@ -59,8 +67,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getCategories: () => dispatch(loadCategories()),
         getPosts: () => dispatch(loadPosts()),
-        likePost: (postId) => dispatch(likePost(postId)),
-        dislikePost: (postId) => dispatch(dislikePost(postId))
+        likePost: (post) => dispatch(likePost(post)),
+        dislikePost: (post) => dispatch(dislikePost(post)),
+        deletePost: (post) => dispatch(deletePost(post)),
     };
 }
 
