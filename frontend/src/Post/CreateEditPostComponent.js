@@ -47,7 +47,7 @@ class CreateEditPostComponent extends React.Component {
             timestamp: new Date().getTime(),
             pageTitle: this.getPageTitle(),
         });
-
+        this.props.history.push('/');
     }
 
     handleInputChange(event) {
