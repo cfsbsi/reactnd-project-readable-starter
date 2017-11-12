@@ -23,6 +23,14 @@ export const create = (body) =>
         body: JSON.stringify(body)
     }).then(res => res.json());
 
+
+export const update = (post) =>
+    fetch(`http://${url}/posts/${post.id}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(post)
+    }).then(res => res.json());
+
 export function findPost(postId) {
     return fetch(`http://${url}/posts/${postId}`, {headers})
         .then((res) => res.json())

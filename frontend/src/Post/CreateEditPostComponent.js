@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {createPost, getPost} from './Action';
+import {createPost, getPost, editPost} from './Action';
 
 class CreateEditPostComponent extends React.Component {
 
@@ -10,7 +10,7 @@ class CreateEditPostComponent extends React.Component {
         this.props.getPost(this.props.match.params.postId);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         this.setState(nextProps.postToEdit);
     }
 
@@ -33,7 +33,13 @@ class CreateEditPostComponent extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.createPost(this.state)
+
+        if (this.props.location.pathname === '/posts/create') {
+            this.createPost(this.state)
+        } else {
+            this.editPost(this.state)
+        }
+
         this.setState({
             title: '',
             author: '',
@@ -43,6 +49,7 @@ class CreateEditPostComponent extends React.Component {
             timestamp: new Date().getTime(),
             pageTitle: this.getPageTitle(),
         });
+
         this.props.history.push('/');
     }
 
@@ -54,6 +61,10 @@ class CreateEditPostComponent extends React.Component {
 
     createPost = (post) => {
         this.props.postPost(post)
+    }
+
+    editPost = (post) => {
+        this.props.editPost(post)
     }
 
     getPageTitle = () => {
@@ -124,7 +135,8 @@ function mapStateToProps({categoryReducer, postReducer}) {
 function mapDispatchToProps(dispatch) {
     return {
         postPost: (post) => dispatch(createPost(post)),
-        getPost: (postId) => dispatch(getPost(postId))
+        getPost: (postId) => dispatch(getPost(postId)),
+        editPost: (post) => dispatch(editPost(post)),
     };
 }
 

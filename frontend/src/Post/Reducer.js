@@ -1,4 +1,4 @@
-import {LOAD_POST_SUCCESS, UPDATE_POST, POST_T0_EDIT} from './ActionTypes'
+import {LOAD_POST_SUCCESS, UPDATE_POST, POST_T0_EDIT, CREATE_POST} from './ActionTypes'
 
 function post(state = {posts: []}, action) {
     switch (action.type) {
@@ -21,6 +21,12 @@ function post(state = {posts: []}, action) {
                 ...state,
                 postToEdit: action.state
             };
+        case CREATE_POST :
+            console.log(state);
+            return {
+                ...state.posts,
+                posts: state.posts.concat(action.state)
+            }
         default :
             return state
     }
