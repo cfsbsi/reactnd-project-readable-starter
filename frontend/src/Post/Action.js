@@ -1,4 +1,4 @@
-import {fetchPosts, create, findPost, delet, vote} from './Api';
+import {fetchPosts, create, findPost, delet, vote, update} from './Api';
 import {LOAD_POST_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT} from './ActionTypes'
 
 export function loadPosts() {
@@ -79,4 +79,14 @@ export function deletePost(post) {
 
 export function deletePostSuccess(post) {
     return updatePost({...post, deleted: true})
+}
+
+export function editPost(body) {
+    return function (dispatch) {
+        update(body).then(post => {
+            dispatch(updatePost(post))
+        }).catch(error => {
+            throw(error);
+        });
+    }
 }
