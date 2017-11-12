@@ -1,5 +1,5 @@
 import {fetchPosts, create, findPost, delet, vote, update} from './Api';
-import {LOAD_POST_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT} from './ActionTypes'
+import {LOAD_POST_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT, ORDER_BY_POST} from './ActionTypes'
 
 export function loadPosts() {
     return function (dispatch) {
@@ -89,4 +89,8 @@ export function editPost(body) {
             throw(error);
         });
     }
+}
+
+export function orderBy(field) {
+    return {type: ORDER_BY_POST, field}
 }

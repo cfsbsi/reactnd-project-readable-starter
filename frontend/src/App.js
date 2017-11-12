@@ -5,9 +5,10 @@ import Category from './Category/CategoryComponent'
 import Post from './Post/PostComponent'
 import CreateEditPostComponent from './Post/CreateEditPostComponent'
 import {loadCategories} from './Category/Action'
-import {loadPosts, likePost, dislikePost, deletePost} from './Post/Action'
+import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action'
 import {withRouter} from 'react-router'
 import Menu from './Menu/MenuComponent'
+import {Button, Col} from 'react-bootstrap'
 
 
 class App extends Component {
@@ -29,33 +30,54 @@ class App extends Component {
         this.props.deletePost(post);
     }
 
+    orderByDate = () => {
+        this.props.orderBy('timestamp');
+    }
+
+    orderByVotes = () => {
+        this.props.orderBy('voteScore');
+    }
+
     render() {
         return (
             <div className="App">
-                <Menu/>
-                <Route exact path="/" render={() => (
-                    <Category
-                        like={this.like}
-                        dislike={this.dislike}
-                        categories={this.props.categoryReducer.categories}
-                        posts={this.props.postReducer.posts.filter(post => post.deleted === false)}
-                        delete={this.delete}
-                    />
-                )}/>
+                <Menu categories={this.props.categoryReducer.categories}/>
+
                 <Switch>
                     <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
                     <Route exact path="/posts/create" component={CreateEditPostComponent}/>
                     <Route exact path="/:category/:postId" component={Post}/>
                     <Route exact path="/:category" render={({match}) => (
-                        <Category
-                            like={this.like}
-                            dislike={this.dislike}
-                            categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
-                            posts={this.props.postReducer.posts
-                                .filter(post => post.deleted === false)
-                                .filter(post => post.category === match.params.category)}
-                            delete={this.delete}
-                        />
+                        <div>
+                            <Col md={8} mdOffset={2}>
+                                <Button onClick={() => this.orderByDate()}>Order by date</Button>
+                                <Button onClick={() => this.orderByVotes()}>order by votes</Button>
+                            </Col>
+                            <Category
+                                like={this.like}
+                                dislike={this.dislike}
+                                categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
+                                posts={this.props.postReducer.posts
+                                    .filter(post => post.deleted === false)
+                                    .filter(post => post.category === match.params.category)}
+                                delete={this.delete}
+                            />
+                        </div>
+                    )}/>
+                    <Route exact path="/" render={() => (
+                        <div>
+                            <Col md={8} mdOffset={2}>
+                                <Button onClick={() => this.orderByDate()}>Order by date</Button>
+                                <Button onClick={() => this.orderByVotes()}>order by votes</Button>
+                            </Col>
+                            <Category
+                                like={this.like}
+                                dislike={this.dislike}
+                                categories={this.props.categoryReducer.categories}
+                                posts={this.props.postReducer.posts.filter(post => post.deleted === false)}
+                                delete={this.delete}
+                            />
+                        </div>
                     )}/>
                 </Switch>
             </div>
@@ -74,6 +96,7 @@ function mapDispatchToProps(dispatch) {
         likePost: (post) => dispatch(likePost(post)),
         dislikePost: (post) => dispatch(dislikePost(post)),
         deletePost: (post) => dispatch(deletePost(post)),
+        orderBy: (field) => dispatch(orderBy(field))
     };
 }
 

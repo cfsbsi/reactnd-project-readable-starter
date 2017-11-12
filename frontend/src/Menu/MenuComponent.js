@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navbar, Nav, MenuItem, NavDropdown} from 'react-bootstrap'
 
-const MenuComponent = function () {
+const MenuComponent = function ({categories}) {
     return (
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
@@ -16,6 +16,13 @@ const MenuComponent = function () {
                         <MenuItem eventKey={1.1} href="/posts/create">
                             Create Post
                         </MenuItem>
+                    </NavDropdown>
+                    <NavDropdown eventKey={2} title="Categories" id="basic-nav-dropdown">
+                        {categories.map((category, index) => (
+                            <MenuItem key={index} eventKey={`2.${index}`} href={`/${category.name}`}>
+                                {category.name}
+                            </MenuItem>
+                            ))}
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

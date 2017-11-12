@@ -29,7 +29,6 @@ class CategoryComponent extends React.Component {
     }
 
     delete = () => {
-        console.log(this.state.postToDelete);
         this.props.delete(this.state.postToDelete);
         this.hideModal();
     }
@@ -54,6 +53,7 @@ class CategoryComponent extends React.Component {
                                         <p>author: {post.author}</p>
                                         <p>comments: {post.commentCount}</p>
                                         <p>voteScore: {post.voteScore}</p>
+                                        <p>date: {new Date(post.timestamp).toString()}</p>
                                         <Link to={`/posts/edit/${post.id}`}>
                                             <button className="btn btn-default">edit</button>
                                         </Link>
