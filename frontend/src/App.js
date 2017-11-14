@@ -8,7 +8,9 @@ import {loadCategories} from './Category/Action'
 import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action'
 import {withRouter} from 'react-router'
 import Menu from './Menu/MenuComponent'
+import SortButtons from './SortButtons/SortButtonsComponent'
 import {Button, Col} from 'react-bootstrap'
+
 
 
 class App extends Component {
@@ -49,10 +51,7 @@ class App extends Component {
                     <Route exact path="/:category/:postId" component={Post}/>
                     <Route exact path="/:category" render={({match}) => (
                         <div>
-                            <Col md={8} mdOffset={2}>
-                                <Button onClick={() => this.orderByDate()}>Order by date</Button>
-                                <Button onClick={() => this.orderByVotes()}>order by votes</Button>
-                            </Col>
+                            <SortButtons orderByDate={this.orderByDate} orderByVotes={this.orderByVotes}/>
                             <Category
                                 like={this.like}
                                 dislike={this.dislike}
@@ -66,10 +65,7 @@ class App extends Component {
                     )}/>
                     <Route exact path="/" render={() => (
                         <div>
-                            <Col md={8} mdOffset={2}>
-                                <Button onClick={() => this.orderByDate()}>Order by date</Button>
-                                <Button onClick={() => this.orderByVotes()}>order by votes</Button>
-                            </Col>
+                            <SortButtons orderByDate={this.orderByDate} orderByVotes={this.orderByVotes}/>
                             <Category
                                 like={this.like}
                                 dislike={this.dislike}
