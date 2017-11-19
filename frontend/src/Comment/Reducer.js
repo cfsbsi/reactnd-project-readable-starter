@@ -1,10 +1,11 @@
 import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, CREATE_COMMENT, COMMENT_T0_EDIT} from '../Utils/ActionTypes'
+import _ from 'lodash'
 
 function comment(state = {comments: []}, action) {
     switch (action.type) {
         case LOAD_COMMENTS_SUCCESS:
             return {
-                comments: state.comments.concat(action.state.comments)
+                comments: _.unionBy(state.comments.concat(action.state.comments), 'id')
             };
         case UPDATE_COMMENT :
             return {
