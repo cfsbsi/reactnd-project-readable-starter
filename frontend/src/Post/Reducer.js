@@ -1,8 +1,8 @@
-import {LOAD_POST_SUCCESS, UPDATE_POST, POST_T0_EDIT, CREATE_POST, ORDER_BY_POST} from './ActionTypes'
+import {LOAD_POSTS_SUCCESS, UPDATE_POST, POST_T0_EDIT, CREATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
 
 function post(state = {posts: []}, action) {
     switch (action.type) {
-        case LOAD_POST_SUCCESS :
+        case LOAD_POSTS_SUCCESS :
             return {
                 ...state,
                 posts: action.state,
@@ -34,7 +34,6 @@ function post(state = {posts: []}, action) {
 }
 
 function getSortByField(field) {
-    console.log(field);
     if(field === 'timestamp'){
         return (post1, post2) => post1[field] - post2[field];
     } else {

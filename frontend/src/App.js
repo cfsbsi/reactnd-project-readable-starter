@@ -4,13 +4,12 @@ import {Route, Switch} from 'react-router-dom';
 import Category from './Category/CategoryComponent'
 import Post from './Post/PostComponent'
 import CreateEditPostComponent from './Post/CreateEditPostComponent'
+import CreateEditCommentComponent from './Comment/CreateEditCommentComponent'
 import {loadCategories} from './Category/Action'
 import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action'
 import {withRouter} from 'react-router'
 import Menu from './Menu/MenuComponent'
 import SortButtons from './SortButtons/SortButtonsComponent'
-import {Button, Col} from 'react-bootstrap'
-
 
 
 class App extends Component {
@@ -48,6 +47,8 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
                     <Route exact path="/posts/create" component={CreateEditPostComponent}/>
+                    <Route exact path="/comments/edit/:commentId" component={CreateEditCommentComponent}/>
+                    <Route exact path="/comments/create" component={CreateEditCommentComponent}/>
                     <Route exact path="/:category/:postId" component={Post}/>
                     <Route exact path="/:category" render={({match}) => (
                         <div>

@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {Panel, Col} from 'react-bootstrap';
 import Confirmation from '../Confirmation/ConfirmationComponent'
+import Comment from '../Comment/CommentComponent'
 
 class CategoryComponent extends React.Component {
 
@@ -60,6 +61,7 @@ class CategoryComponent extends React.Component {
                                         <button className="btn btn-default" onClick={() => this.showModal(post)}>
                                             delete
                                         </button>
+                                        <Comment postId={post.id}/>
                                     </div>
                                 ))}
                             </Panel>

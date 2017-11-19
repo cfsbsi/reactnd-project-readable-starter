@@ -1,5 +1,5 @@
-import { fetchCategories } from './Api';
-import { LOAD_CATEGORY_SUCCESS } from './ActionTypes'
+import { fetchCategories } from '../Utils/Api';
+import { LOAD_CATEGORIES_SUCCESS } from '../Utils/ActionTypes'
 
 export function loadCategories() {
     return function (dispatch) {
@@ -12,5 +12,5 @@ export function loadCategories() {
 }
 
 export function loadCategoriesSuccess(state) {
-    return {type: LOAD_CATEGORY_SUCCESS, state};
+    return {type: LOAD_CATEGORIES_SUCCESS, state};
 }

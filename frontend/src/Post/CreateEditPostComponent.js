@@ -7,7 +7,9 @@ class CreateEditPostComponent extends React.Component {
     componentDidMount() {
         this.setState({pageTitle: this.getPageTitle()})
 
-        this.props.getPost(this.props.match.params.postId);
+        if (this.props.location.pathname !== '/posts/create') {
+            this.props.getComment(this.props.match.params.postId);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,7 +66,7 @@ class CreateEditPostComponent extends React.Component {
     }
 
     editPost = (post) => {
-        this.props.editPost(post)
+        this.props.editComment(post)
     }
 
     getPageTitle = () => {
@@ -92,7 +94,7 @@ class CreateEditPostComponent extends React.Component {
             return null;
         }
 
-        return this.props.postNotFound ? (
+        return this.props.commentNotFound ? (
             <div>
                 <h1>Post not found</h1>
             </div>
@@ -135,7 +137,7 @@ function mapStateToProps({categoryReducer, postReducer}) {
 function mapDispatchToProps(dispatch) {
     return {
         postPost: (post) => dispatch(createPost(post)),
-        getPost: (postId) => dispatch(getPost(postId)),
+        getComment: (postId) => dispatch(getPost(postId)),
         editPost: (post) => dispatch(editPost(post)),
     };
 }

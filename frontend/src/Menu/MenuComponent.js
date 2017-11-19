@@ -12,17 +12,22 @@ const MenuComponent = function ({categories}) {
             </Navbar.Header>
             <Navbar.Collapse>
                 <Nav>
-                    <NavDropdown eventKey={1} title="Post" id="basic-nav-dropdown">
-                        <MenuItem eventKey={1.1} href="/posts/create">
-                            Create Post
-                        </MenuItem>
-                    </NavDropdown>
-                    <NavDropdown eventKey={2} title="Categories" id="basic-nav-dropdown">
+                    <NavDropdown eventKey={1} title="Categories" id="basic-nav-dropdown">
                         {categories.map((category, index) => (
-                            <MenuItem key={index} eventKey={`2.${index}`} href={`/${category.name}`}>
+                            <MenuItem key={index} eventKey={`1.${index}`} href={`/${category.name}`}>
                                 {category.name}
                             </MenuItem>
                             ))}
+                    </NavDropdown>
+                    <NavDropdown eventKey={2} title="Post" id="basic-nav-dropdown">
+                        <MenuItem eventKey={2.1} href="/posts/create">
+                            Create Post
+                        </MenuItem>
+                    </NavDropdown>
+                    <NavDropdown eventKey={3} title="Comment" id="basic-nav-dropdown">
+                        <MenuItem eventKey={3.1} href="/comments/create">
+                            Create Comment
+                        </MenuItem>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

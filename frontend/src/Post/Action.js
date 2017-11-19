@@ -1,5 +1,5 @@
-import {fetchPosts, create, findPost, delet, vote, update} from './Api';
-import {LOAD_POST_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT, ORDER_BY_POST} from './ActionTypes'
+import {fetchPosts, newPost, findPost, delPost, postVote, update} from '../Utils/Api';
+import {LOAD_POSTS_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT, ORDER_BY_POST} from '../Utils/ActionTypes'
 
 export function loadPosts() {
     return function (dispatch) {
@@ -12,12 +12,12 @@ export function loadPosts() {
 }
 
 export function loadPostsSuccess(state) {
-    return {type: LOAD_POST_SUCCESS, state};
+    return {type: LOAD_POSTS_SUCCESS, state};
 }
 
 export function createPost(body) {
     return function (dispatch) {
-        create(body).then(post => {
+        newPost(body).then(post => {
             dispatch(createPostSuccess(post))
         }).catch(error => {
             throw(error);
@@ -49,7 +49,7 @@ export function updatePost(state) {
 
 export function likePost(post) {
     return function (dispatch){
-        vote(post.id, {option: 'upVote'}).then(
+        postVote(post.id, {option: 'upVote'}).then(
             () => dispatch(updatePost({...post, voteScore: ++post.voteScore}))
         ).catch(error => {
             throw(error);
@@ -59,7 +59,7 @@ export function likePost(post) {
 
 export function dislikePost(post) {
     return function (dispatch){
-        vote(post.id, {option: 'downVote'}).then(
+        postVote(post.id, {option: 'downVote'}).then(
             () => dispatch(updatePost({...post, voteScore: --post.voteScore}))
         ).catch(error => {
             throw(error);
@@ -69,7 +69,7 @@ export function dislikePost(post) {
 
 export function deletePost(post) {
     return function (dispatch) {
-        delet(post.id).then(post => {
+        delPost(post.id).then(post => {
             dispatch(deletePostSuccess(post))
         }).catch(error => {
             throw(error);
