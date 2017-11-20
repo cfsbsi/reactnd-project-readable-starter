@@ -49,17 +49,16 @@ class CategoryComponent extends React.Component {
                                         <Link to={`${post.category}/${post.id}`}>
                                             <h3>{post.title}</h3>
                                         </Link>
-                                        <span onClick={() => this.props.like(post)} className="glyphicon glyphicon-thumbs-up"></span>
-                                        <span onClick={() => this.props.dislike(post)} className="glyphicon glyphicon-thumbs-down"></span>
                                         <p>author: {post.author}</p>
                                         <p>comments: {post.commentCount}</p>
                                         <p>voteScore: {post.voteScore}</p>
                                         <p>date: {new Date(post.timestamp).toString()}</p>
+                                        <button onClick={() => this.props.like(post)} className="glyphicon glyphicon-thumbs-up"></button>
+                                        <button onClick={() => this.props.dislike(post)} className="glyphicon glyphicon-thumbs-down"></button>
                                         <Link to={`/posts/edit/${post.id}`}>
-                                            <button className="btn btn-default">edit</button>
+                                            <button className="glyphicon glyphicon-pencil"></button>
                                         </Link>
-                                        <button className="btn btn-default" onClick={() => this.showModal(post)}>
-                                            delete
+                                        <button className="glyphicon glyphicon-trash" onClick={() => this.showModal(post)}>
                                         </button>
                                         <Comment postId={post.id}/>
                                     </div>

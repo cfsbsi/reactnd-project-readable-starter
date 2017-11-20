@@ -37,27 +37,27 @@ class CommentComponent extends React.Component {
     render() {
 
         const {postId} = this.props
+        const filteredComments = this.props.commentReducer.comments
+            .filter(comment => comment.parentId === postId)
+            .filter(comment => comment.deleted === false)
+            .sort((c1, c2) => c2.voteScore - c1.voteScore);
+
         return (
-            <div>
-                <h4>Comments:</h4>
+            <div style={{marginTop: 20}}>
+                {filteredComments.length > 0 ?(<h4>Comments:</h4>):false}
                 <Col md={8} mdOffset={2}>
-                    {this.props.commentReducer.comments
-                        .filter(comment => comment.parentId === postId)
-                        .filter(comment => comment.deleted === false)
-                        .sort((c1, c2) => c2.voteScore - c1.voteScore)
+                    {filteredComments
                         .map(comment => (
-                        <div key={comment.id}>
-                            <p>author: {comment.author}</p>
-                            <p>comment: {comment.body}</p>
-                            <p>voteScore: {comment.voteScore}</p>
-                            <span onClick={() => this.props.likeComment(comment)} className="glyphicon glyphicon-thumbs-up"></span>
-                            <span onClick={() => this.props.dislikeComment(comment)} className="glyphicon glyphicon-thumbs-down"></span>
+                        <div style={{marginBottom: 30}} key={comment.id}>
+                            <p><b>author:</b> {comment.author}</p>
+                            <p><b>comment:</b> {comment.body}</p>
+                            <p><b>voteScore:</b> {comment.voteScore}</p>
+                            <button onClick={() => this.props.likeComment(comment)} className="glyphicon glyphicon-thumbs-up"></button>
+                            <button onClick={() => this.props.dislikeComment(comment)} className="glyphicon glyphicon-thumbs-down"></button>
                             <Link to={`/comments/edit/${comment.id}`}>
-                                <button className="btn btn-default">edit</button>
+                                <button className="glyphicon glyphicon-pencil"></button>
                             </Link>
-                            <button className="btn btn-default" onClick={() => this.showModal(comment)}>
-                                delete
-                            </button>
+                            <button className="glyphicon glyphicon-trash" onClick={() => this.showModal(comment)}/>
                         </div>
                     ))}
                 </Col>

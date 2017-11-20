@@ -66,7 +66,7 @@ class CreateEditPostComponent extends React.Component {
     }
 
     editPost = (post) => {
-        this.props.editComment(post)
+        this.props.editPost(post)
     }
 
     getPageTitle = () => {
