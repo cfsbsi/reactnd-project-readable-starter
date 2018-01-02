@@ -5,11 +5,11 @@ import {createComment, getComment, editComment} from './Action';
 class CreateEditCommentComponent extends React.Component {
 
     componentDidMount() {
-
         this.setState({pageTitle: this.getPageTitle()})
 
         if (this.props.location.pathname !== '/comments/create') {
-            this.props.getComment(this.props.match.params.commentId);
+            this.props.getComment(this.props.match.params.commentId)
+                .then(comment => this.setState(comment));
         }
     }
 
@@ -121,7 +121,7 @@ function mapStateToProps({commentReducer, postReducer}) {
 function mapDispatchToProps(dispatch) {
     return {
         postComment: (comment) => dispatch(createComment(comment)),
-        getComment: (commentId) => dispatch(getComment(commentId)),
+        getComment: (commentId) => getComment(commentId),
         editComment: (comment) => dispatch(editComment(comment)),
     };
 }

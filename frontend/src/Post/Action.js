@@ -1,5 +1,5 @@
 import {fetchPosts, newPost, findPost, delPost, postVote, update} from '../Utils/Api';
-import {LOAD_POSTS_SUCCESS, CREATE_POST, UPDATE_POST, POST_T0_EDIT, ORDER_BY_POST} from '../Utils/ActionTypes'
+import {LOAD_POSTS_SUCCESS, CREATE_POST, UPDATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
 
 export function loadPosts() {
     return function (dispatch) {
@@ -30,17 +30,10 @@ export function createPostSuccess(state) {
 }
 
 export function getPost(postId) {
-    return function(dispatch) {
-        findPost(postId).then(post => {
-            dispatch(addPostToEdit(post))
-        }).catch(error => {
+    return findPost(postId)
+        .catch(error => {
             throw(error);
         });
-    }
-}
-
-export function addPostToEdit(state) {
-    return {type: POST_T0_EDIT, state};
 }
 
 export function updatePost(state) {
