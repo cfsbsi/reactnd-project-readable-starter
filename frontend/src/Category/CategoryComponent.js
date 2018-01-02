@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {Panel, Col} from 'react-bootstrap';
 import Confirmation from '../Confirmation/ConfirmationComponent'
-import Comment from '../Comment/CommentComponent'
 
 class CategoryComponent extends React.Component {
 
@@ -60,7 +59,6 @@ class CategoryComponent extends React.Component {
                                         </Link>
                                         <button className="glyphicon glyphicon-trash" onClick={() => this.showModal(post)}>
                                         </button>
-                                        <Comment postId={post.id}/>
                                     </div>
                                 ))}
                             </Panel>
