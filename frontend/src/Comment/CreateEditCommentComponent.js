@@ -5,7 +5,6 @@ import {createComment, getComment, editComment} from './Action';
 class CreateEditCommentComponent extends React.Component {
 
     componentDidMount() {
-
         this.setState({pageTitle: this.getPageTitle()})
 
         if (this.props.location.pathname !== '/comments/create') {
@@ -14,7 +13,9 @@ class CreateEditCommentComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(nextProps.commentToEdit);
+        if(nextProps.postReducer.posts.length > 0){
+            this.setState({parentId: nextProps.postReducer.posts[0].id})
+        }
     }
 
     constructor(props) {
