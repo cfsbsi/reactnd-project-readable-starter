@@ -1,4 +1,4 @@
-import {LOAD_POSTS_SUCCESS, UPDATE_POST, POST_T0_EDIT, CREATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
+import {LOAD_POSTS_SUCCESS, UPDATE_POST, CREATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
 
 function post(state = {posts: []}, action) {
     switch (action.type) {
@@ -15,11 +15,6 @@ function post(state = {posts: []}, action) {
                     }
                     return post
                 })
-            };
-        case POST_T0_EDIT :
-            return {
-                ...state,
-                postToEdit: action.state
             };
         case CREATE_POST :
             return {

@@ -1,4 +1,4 @@
-import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, CREATE_COMMENT, COMMENT_T0_EDIT} from '../Utils/ActionTypes'
+import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, CREATE_COMMENT} from '../Utils/ActionTypes'
 import _ from 'lodash'
 
 function comment(state = {comments: []}, action) {
@@ -20,11 +20,6 @@ function comment(state = {comments: []}, action) {
             return {
                 ...state.comments,
                 comments: state.comments.concat(action.state)
-            };
-        case COMMENT_T0_EDIT:
-            return {
-                ...state,
-                commentToEdit: action.state
             };
         default :
             return state

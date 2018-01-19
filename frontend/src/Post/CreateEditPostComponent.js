@@ -8,7 +8,8 @@ class CreateEditPostComponent extends React.Component {
         this.setState({pageTitle: this.getPageTitle()})
 
         if (this.props.location.pathname !== '/posts/create') {
-            this.props.getComment(this.props.match.params.postId);
+            this.props.getPost(this.props.match.params.postId)
+                .then(post => this.setState(post));
         }
     }
 
@@ -137,7 +138,7 @@ function mapStateToProps({categoryReducer, postReducer}) {
 function mapDispatchToProps(dispatch) {
     return {
         postPost: (post) => dispatch(createPost(post)),
-        getComment: (postId) => dispatch(getPost(postId)),
+        getPost: (postId) => getPost(postId),
         editPost: (post) => dispatch(editPost(post)),
     };
 }

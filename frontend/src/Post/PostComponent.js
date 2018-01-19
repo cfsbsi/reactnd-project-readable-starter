@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
+import Comment from '../Comment/CommentComponent'
 
 class PostComponent extends React.Component {
 
@@ -16,6 +17,7 @@ class PostComponent extends React.Component {
                 <p>comments: {selectedPost.commentCount}</p>
                 <p>vote score: {selectedPost.voteScore}</p>
                 <h4>{selectedPost.body}</h4>
+                <Comment postId={selectedPost.id}/>
             </div>
         ) : (
             <div>

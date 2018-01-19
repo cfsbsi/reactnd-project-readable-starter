@@ -1,4 +1,4 @@
-import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, COMMENT_T0_EDIT, CREATE_COMMENT} from '../Utils/ActionTypes'
+import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, CREATE_COMMENT} from '../Utils/ActionTypes'
 import {fetchComments, delComment, commentVote, findComment, newComment, updateCommentApi} from '../Utils/Api'
 
 export function loadComments(commentId) {
@@ -35,7 +35,7 @@ export function updateComment(state) {
 }
 
 export function likeComment(comment) {
-    return function (dispatch){
+    return function (dispatch) {
         commentVote(comment.id, {option: 'upVote'}).then(
             () => dispatch(updateComment({...comment, voteScore: ++comment.voteScore}))
         ).catch(error => {
@@ -45,7 +45,7 @@ export function likeComment(comment) {
 }
 
 export function dislikeComment(comment) {
-    return function (dispatch){
+    return function (dispatch) {
         commentVote(comment.id, {option: 'downVote'}).then(
             () => dispatch(updateComment({...comment, voteScore: --comment.voteScore}))
         ).catch(error => {
@@ -69,19 +69,11 @@ export function createCommentSuccess(state) {
 }
 
 export function getComment(commentId) {
-    return function(dispatch) {
-        findComment(commentId).then(comment => {
-            dispatch(addCommentToEdit(comment))
-        }).catch(error => {
+    return findComment(commentId)
+        .catch(error => {
             throw(error);
         });
-    }
 }
-
-export function addCommentToEdit(state) {
-    return {type: COMMENT_T0_EDIT, state};
-}
-
 
 export function editComment(body) {
     return function (dispatch) {
