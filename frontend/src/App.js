@@ -93,6 +93,11 @@ class App extends Component {
 }
 
 function mapStateToProps({categoryReducer, postReducer}) {
+    if (postReducer.posts){
+        postReducer.posts = postReducer.posts.sort(sortByField(postReducer.sortBy))
+        console.log(postReducer.posts.sort(sortByField(postReducer.sortBy)));
+    }
+
     return {categoryReducer, postReducer};
 }
 
@@ -105,6 +110,15 @@ function mapDispatchToProps(dispatch) {
         deletePost: (post) => dispatch(deletePost(post)),
         orderBy: (field) => dispatch(orderBy(field))
     };
+}
+
+function sortByField(field) {
+    console.log(field === 'timestamp');
+    if(field === 'timestamp'){
+        return (post1, post2) => post1[field] - post2[field];
+    } else {
+        return (post1, post2) => post2[field] - post1[field];
+    }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
