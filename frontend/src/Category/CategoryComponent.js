@@ -13,8 +13,8 @@ class CategoryComponent extends React.Component {
         };
     }
 
-    containsCategories = (categories)  => {
-        if(categories && categories.length > 0 && categories[0] !== undefined){
+    containsCategories = (categories) => {
+        if (categories && categories.length > 0 && categories[0] !== undefined) {
             return true;
         }
         return false;
@@ -34,37 +34,36 @@ class CategoryComponent extends React.Component {
     }
 
     render() {
-        return this.containsCategories(this.props.categories)?(
+        return this.containsCategories(this.props.categories) ? (
             <div>
-                {this.props.categories && this.props.categories.map((category, index) => (
-                    <div key={index}>
-                        <Col md={8} mdOffset={2}>
-                            <Panel header={category.name}>
-                                {this.props.posts &&
-                                this.props.posts.length > 0 &&
-                                this.props.posts.filter((post) => post.category === category.name)
-                                    .map((post, index) => (
-                                    <div key={index}>
-                                        <Link to={`${post.category}/${post.id}`}>
-                                            <h3>{post.title}</h3>
-                                        </Link>
-                                        <p>author: {post.author}</p>
-                                        <p>comments: {post.commentCount}</p>
-                                        <p>voteScore: {post.voteScore}</p>
-                                        <p>date: {new Date(post.timestamp).toString()}</p>
-                                        <button onClick={() => this.props.like(post)} className="glyphicon glyphicon-thumbs-up"></button>
-                                        <button onClick={() => this.props.dislike(post)} className="glyphicon glyphicon-thumbs-down"></button>
-                                        <Link to={`/posts/edit/${post.id}`}>
-                                            <button className="glyphicon glyphicon-pencil"></button>
-                                        </Link>
-                                        <button className="glyphicon glyphicon-trash" onClick={() => this.showModal(post)}>
-                                        </button>
-                                    </div>
-                                ))}
-                            </Panel>
-                        </Col>
-                    </div>
-                ))}
+                <div>
+                    <Col md={8} mdOffset={2}>
+                        <Panel header="Posts">
+                            {this.props.posts &&
+                            this.props.posts.length > 0 &&
+                            this.props.posts.map((post, index) => (
+                                <div key={index}>
+                                    <Link to={`${post.category}/${post.id}`}>
+                                        <h3>{post.title}</h3>
+                                    </Link>
+                                    <p>author: {post.author}</p>
+                                    <p>comments: {post.commentCount}</p>
+                                    <p>voteScore: {post.voteScore}</p>
+                                    <p>date: {new Date(post.timestamp).toString()}</p>
+                                    <button onClick={() => this.props.like(post)}
+                                            className="glyphicon glyphicon-thumbs-up"></button>
+                                    <button onClick={() => this.props.dislike(post)}
+                                            className="glyphicon glyphicon-thumbs-down"></button>
+                                    <Link to={`/posts/edit/${post.id}`}>
+                                        <button className="glyphicon glyphicon-pencil"></button>
+                                    </Link>
+                                    <button className="glyphicon glyphicon-trash" onClick={() => this.showModal(post)}>
+                                    </button>
+                                </div>
+                            ))}
+                        </Panel>
+                    </Col>
+                </div>
                 <Confirmation show={this.state.showModal}
                               title="Deleting Post"
                               confirmation="Are you sure you want to delete this?"
@@ -74,7 +73,7 @@ class CategoryComponent extends React.Component {
                               dismiss={() => this.hideModal()}
                 />
             </div>
-        ):(
+        ) : (
             <div>
                 <h1>Category not found!</h1>
             </div>
