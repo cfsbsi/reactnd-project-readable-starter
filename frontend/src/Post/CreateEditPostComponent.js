@@ -5,10 +5,10 @@ import {createPost, getPost, editPost} from './Action';
 class CreateEditPostComponent extends React.Component {
 
     componentDidMount() {
-        this.setState({pageTitle: this.getPageTitle()})
+        this.setState({pageTitle: this.props.pageTitle})
 
-        if (this.props.location.pathname !== '/posts/create') {
-            this.props.getPost(this.props.match.params.postId)
+        if (this.props.pageTitle !== 'Create Post') {
+            this.props.getPost(this.props.postId)
                 .then(post => this.setState(post));
         }
     }
@@ -37,7 +37,7 @@ class CreateEditPostComponent extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.props.location.pathname === '/posts/create') {
+        if (this.props.pageTitle === 'Create Post') {
             this.createPost(this.state)
         } else {
             this.editPost(this.state)
@@ -49,8 +49,7 @@ class CreateEditPostComponent extends React.Component {
             body: '',
             category: 'react',
             id: (Math.floor((Math.random() * 1000000) + 1)).toString(),
-            timestamp: new Date().getTime(),
-            pageTitle: this.getPageTitle(),
+            timestamp: new Date().getTime()
         });
 
         this.props.history.push('/');
@@ -70,21 +69,13 @@ class CreateEditPostComponent extends React.Component {
         this.props.editPost(post)
     }
 
-    getPageTitle = () => {
-        if (this.props.location.pathname === '/posts/create') {
-            return 'Create Post';
-        } else {
-            return 'Edit Post';
-        }
-    }
-
     postNotFound = () => {
 
-        if (this.props.location.pathname === '/posts/create') {
+        if (this.props.pageTitle === 'Create Post') {
             return false;
         }
 
-        const postFound = this.props.postReducer.posts.find(post => post.id === this.props.match.params.postId.toString());
+        const postFound = this.props.postReducer.posts.find(post => post.id === this.props.postId);
 
         return postFound ? false : true;
 

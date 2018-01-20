@@ -45,10 +45,20 @@ class App extends Component {
                 <Menu categories={this.props.categoryReducer.categories}/>
 
                 <Switch>
-                    <Route exact path="/posts/edit/:postId" component={CreateEditPostComponent}/>
-                    <Route exact path="/posts/create" component={CreateEditPostComponent}/>
-                    <Route exact path="/comments/edit/:commentId" component={CreateEditCommentComponent}/>
-                    <Route exact path="/comments/create" component={CreateEditCommentComponent}/>
+                    <Route exact path="/posts/edit/:postId" render={({location, history, match}) => (
+                        <CreateEditPostComponent pageTitle="Edit Post"
+                                                 postId={match.params.postId} history={history}/>
+                    )}/>
+                    <Route exact path="/posts/create" render={({history}) => (
+                        <CreateEditPostComponent pageTitle="Create Post" history={history}/>
+                    )}/>
+                    <Route exact path="/comments/edit/:commentId" render={({location, history, match}) => (
+                        <CreateEditCommentComponent pageTitle="Edit Comment"
+                                                    commentId={match.params.commentId} history={history}/>
+                    )}/>
+                    <Route exact path="/comments/create" render={({history}) => (
+                        <CreateEditCommentComponent pageTitle="Create Comment" history={history}/>
+                    )}/>
                     <Route exact path="/:category/:postId" component={Post}/>
                     <Route exact path="/:category" render={({match}) => (
                         <div>

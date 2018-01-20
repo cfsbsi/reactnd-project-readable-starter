@@ -5,10 +5,10 @@ import {createComment, getComment, editComment} from './Action';
 class CreateEditCommentComponent extends React.Component {
 
     componentDidMount() {
-        this.setState({pageTitle: this.getPageTitle()})
+        this.setState({pageTitle: this.props.pageTitle})
 
-        if (this.props.location.pathname !== '/comments/create') {
-            this.props.getComment(this.props.match.params.commentId)
+        if (this.props.pageTitle !== 'Create Comment') {
+            this.props.getComment(this.props.commentId)
                 .then(comment => this.setState(comment));
         }
     }
@@ -27,7 +27,6 @@ class CreateEditCommentComponent extends React.Component {
             parentId: '',
             id: '',
             timestamp: 0,
-            pageTitle: 'Edit Comment',
             category: 'react',
             commentNotFound: this.commentNotFound()
         };
@@ -45,7 +44,7 @@ class CreateEditCommentComponent extends React.Component {
     }
 
     createOrEditComment = () => {
-        if (this.props.location.pathname === '/comments/create') {
+        if (this.props.pageTitle === 'Create Comment') {
             this.createComment(this.state)
         } else {
             this.editComment(this.state)
@@ -66,21 +65,13 @@ class CreateEditCommentComponent extends React.Component {
         this.props.editComment(comment)
     }
 
-    getPageTitle = () => {
-        if (this.props.location.pathname === '/comments/create') {
-            return 'Create Comment';
-        } else {
-            return 'Edit Comment';
-        }
-    }
-
     commentNotFound = () => {
 
-        if (this.props.location.pathname === '/comments/create') {
+        if (this.props.pageTitle === 'Create Comment') {
             return false;
         }
 
-        const commentFound = this.props.commentReducer.comments.find(comment => comment.id === this.props.match.params.commentId.toString());
+        const commentFound = this.props.commentReducer.comments.find(comment => comment.id === this.props.commentId);
 
         return commentFound ? false : true;
 
