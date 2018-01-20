@@ -18,7 +18,7 @@ function post(state = {posts: []}, action) {
             };
         case CREATE_POST :
             return {
-                ...state.posts,
+                ...state,
                 posts: state.posts.concat(action.state)
             };
         case ORDER_BY_POST :

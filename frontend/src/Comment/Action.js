@@ -1,5 +1,6 @@
 import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, CREATE_COMMENT} from '../Utils/ActionTypes'
 import {fetchComments, delComment, commentVote, findComment, newComment, updateCommentApi} from '../Utils/Api'
+import Uuid from 'uuid'
 
 export function loadComments(commentId) {
     return function (dispatch) {
@@ -55,8 +56,9 @@ export function dislikeComment(comment) {
 }
 
 export function createComment(body) {
+    const completeComment = {...body, timestamp: Date.now(), id: Uuid()}
     return function (dispatch) {
-        newComment(body).then(comment => {
+        newComment(completeComment).then(comment => {
             dispatch(createCommentSuccess(comment))
         }).catch(error => {
             throw(error);

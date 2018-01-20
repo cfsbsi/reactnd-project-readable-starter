@@ -1,5 +1,6 @@
 import {fetchPosts, newPost, findPost, delPost, postVote, update} from '../Utils/Api';
 import {LOAD_POSTS_SUCCESS, CREATE_POST, UPDATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
+import Uuid from 'uuid'
 
 export function loadPosts() {
     return function (dispatch) {
@@ -16,8 +17,9 @@ export function loadPostsSuccess(state) {
 }
 
 export function createPost(body) {
+    const completePost = {...body, timestamp: Date.now(), id: Uuid()}
     return function (dispatch) {
-        newPost(body).then(post => {
+        newPost(completePost).then(post => {
             dispatch(createPostSuccess(post))
         }).catch(error => {
             throw(error);

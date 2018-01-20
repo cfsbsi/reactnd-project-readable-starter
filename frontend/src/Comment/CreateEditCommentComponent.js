@@ -25,8 +25,8 @@ class CreateEditCommentComponent extends React.Component {
             author: '',
             body: '',
             parentId: '',
-            id: (Math.floor((Math.random() * 1000000) + 1)).toString(),
-            timestamp: new Date().getTime(),
+            id: '',
+            timestamp: 0,
             pageTitle: 'Edit Comment',
             category: 'react',
             commentNotFound: this.commentNotFound()
@@ -39,13 +39,17 @@ class CreateEditCommentComponent extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        this.createOrEditComment()
+
+        this.props.history.push('/');console.log(this.state);
+    }
+
+    createOrEditComment = () => {
         if (this.props.location.pathname === '/comments/create') {
             this.createComment(this.state)
         } else {
             this.editComment(this.state)
         }
-
-        this.props.history.push('/');
     }
 
     handleInputChange(event) {
