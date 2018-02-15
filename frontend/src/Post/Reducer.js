@@ -1,6 +1,6 @@
 import {LOAD_POSTS_SUCCESS, UPDATE_POST, CREATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
 
-function post(state = {posts: [], sortBy: 'timestamp'}, action) {
+function post(state = {posts: [], sortBy: 'voteScore'}, action) {
     switch (action.type) {
         case LOAD_POSTS_SUCCESS :
             return {
@@ -14,7 +14,7 @@ function post(state = {posts: [], sortBy: 'timestamp'}, action) {
                         return action.state
                     }
                     return post
-                })
+                }), sortBy: state.sortBy
             };
         case CREATE_POST :
             return {

@@ -94,8 +94,7 @@ class App extends Component {
 
 function mapStateToProps({categoryReducer, postReducer}) {
     if (postReducer.posts){
-        postReducer.posts = postReducer.posts.sort(sortByField(postReducer.sortBy))
-        console.log(postReducer.posts.sort(sortByField(postReducer.sortBy)));
+        postReducer.posts = postReducer.posts.slice().sort(sortByField(postReducer.sortBy))
     }
 
     return {categoryReducer, postReducer};
