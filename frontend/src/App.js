@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
-import Category from './Category/CategoryComponent'
-import Post from './Post/PostComponent'
-import CreateEditPostComponent from './Post/CreateEditPostComponent'
-import CreateEditCommentComponent from './Comment/CreateEditCommentComponent'
-import {loadCategories} from './Category/Action'
-import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action'
-import {withRouter} from 'react-router'
-import Menu from './Menu/MenuComponent'
-import SortButtons from './SortButtons/SortButtonsComponent'
+import {Col} from 'react-bootstrap';
+import Category from './Category/CategoryComponent';
+import Comment from './Comment/CommentComponent';
+import CreateEditPostComponent from './Post/CreateEditPostComponent';
+import CreateEditCommentComponent from './Comment/CreateEditCommentComponent';
+import {loadCategories} from './Category/Action';
+import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action';
+import {withRouter} from 'react-router';
+import Menu from './Menu/MenuComponent';
+import SortButtons from './SortButtons/SortButtonsComponent';
 
 
 class App extends Component {
@@ -59,7 +60,24 @@ class App extends Component {
                     <Route exact path="/comments/create" render={({history}) => (
                         <CreateEditCommentComponent pageTitle="Create Comment" history={history}/>
                     )}/>
-                    <Route exact path="/:category/:postId" component={Post}/>
+                    <Route exact path="/:category/:postId" render={({match}) => (
+                        <div>
+                            <row>
+                                <Category
+                                    like={this.like}
+                                    dislike={this.dislike}
+                                    categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
+                                    posts={this.props.postReducer.posts
+                                        .filter(post => post.deleted === false)
+                                        .filter(post => post.id === match.params.postId)}
+                                    delete={this.delete}
+                                />
+                            </row>
+                            <Col md={8} mdOffset={2}>
+                                <Comment postId={match.params.postId}/>
+                            </Col>
+                        </div>
+                    )}/>
                     <Route exact path="/:category" render={({match}) => (
                         <div>
                             <SortButtons orderByDate={this.orderByDate} orderByVotes={this.orderByVotes}/>
@@ -93,7 +111,7 @@ class App extends Component {
 }
 
 function mapStateToProps({categoryReducer, postReducer}) {
-    if (postReducer.posts){
+    if (postReducer.posts) {
         postReducer.posts = postReducer.posts.slice().sort(sortByField(postReducer.sortBy))
     }
 
@@ -113,7 +131,7 @@ function mapDispatchToProps(dispatch) {
 
 function sortByField(field) {
     console.log(field === 'timestamp');
-    if(field === 'timestamp'){
+    if (field === 'timestamp') {
         return (post1, post2) => post1[field] - post2[field];
     } else {
         return (post1, post2) => post2[field] - post1[field];

@@ -43,7 +43,7 @@ class CommentComponent extends React.Component {
             .sort((c1, c2) => c2.voteScore - c1.voteScore);
 
         return (
-            <div style={{marginTop: 20}}>
+            <div>
                 {filteredComments.length > 0 ?(<h4>Comments:</h4>):false}
                 <Col md={8} mdOffset={2}>
                     {filteredComments
