@@ -1,6 +1,7 @@
 import React from 'react'
 import {Col} from 'react-bootstrap'
 import {loadComments, deleteComment, likeComment, dislikeComment} from './Action'
+import {subCommentCount} from '../Post/Action'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router'
@@ -31,6 +32,7 @@ class CommentComponent extends React.Component {
 
     delete = () => {
         this.props.delete(this.state.commentToDelete);
+        this.props.minusOneCommentOnPost(this.state.commentToDelete.parentId);
         this.hideModal();
     }
 
@@ -84,6 +86,7 @@ function mapDispatchToProps(dispatch) {
         delete: (comment) => dispatch(deleteComment(comment)),
         likeComment: (post) => dispatch(likeComment(post)),
         dislikeComment: (post) => dispatch(dislikeComment(post)),
+        minusOneCommentOnPost: (postId) => dispatch(subCommentCount(postId))
     };
 }
 

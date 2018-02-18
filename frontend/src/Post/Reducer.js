@@ -1,4 +1,4 @@
-import {LOAD_POSTS_SUCCESS, UPDATE_POST, CREATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
+import {LOAD_POSTS_SUCCESS, UPDATE_POST, CREATE_POST, ORDER_BY_POST, ADD_COMMENT_COUNT, SUB_COMMENT_COUNT} from '../Utils/ActionTypes'
 
 function post(state = {posts: [], sortBy: 'voteScore'}, action) {
     switch (action.type) {
@@ -23,6 +23,20 @@ function post(state = {posts: [], sortBy: 'voteScore'}, action) {
             };
         case ORDER_BY_POST :
             return {...state, sortBy: action.field}
+        case ADD_COMMENT_COUNT :
+            return { posts: state.posts.map(post => {
+                if (post.id === action.postId) {
+                    return {...post, commentCount: post.commentCount + 1}
+                }
+                return post
+            })};
+        case SUB_COMMENT_COUNT :
+            return { posts: state.posts.map(post => {
+                if (post.id === action.postId) {
+                    return {...post, commentCount: post.commentCount - 1}
+                }
+                return post
+            })};
         default :
             return state
     }

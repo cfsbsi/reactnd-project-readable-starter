@@ -6,6 +6,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import {connect} from 'react-redux';
 import {createComment} from './Action';
+import {addCommentCount} from '../Post/Action';
 
 
 class CreateCommentComponent extends React.Component {
@@ -56,6 +57,8 @@ class CreateCommentComponent extends React.Component {
 
         this.setState({body: '', author: ''});
 
+        this.props.addOneToPostCount(this.props.postId);
+
     }
 
     render() {
@@ -85,6 +88,7 @@ class CreateCommentComponent extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
         postComment: (comment) => dispatch(createComment(comment)),
+        addOneToPostCount: (postId) => dispatch(addCommentCount(postId)),
     };
 }
 

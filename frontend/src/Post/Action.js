@@ -1,5 +1,5 @@
 import {fetchPosts, newPost, findPost, delPost, postVote, update} from '../Utils/Api';
-import {LOAD_POSTS_SUCCESS, CREATE_POST, UPDATE_POST, ORDER_BY_POST} from '../Utils/ActionTypes'
+import {LOAD_POSTS_SUCCESS, CREATE_POST, UPDATE_POST, ORDER_BY_POST, ADD_COMMENT_COUNT, SUB_COMMENT_COUNT} from '../Utils/ActionTypes'
 import Uuid from 'uuid'
 
 export function loadPosts() {
@@ -88,4 +88,13 @@ export function editPost(body) {
 
 export function orderBy(field) {
     return {type: ORDER_BY_POST, field}
+}
+
+export function addCommentCount(postId) {
+    return {type: ADD_COMMENT_COUNT, postId}
+}
+
+
+export function subCommentCount(postId) {
+    return {type: SUB_COMMENT_COUNT, postId}
 }
