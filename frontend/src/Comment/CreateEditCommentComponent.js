@@ -40,7 +40,7 @@ class CreateEditCommentComponent extends React.Component {
 
         this.createOrEditComment()
 
-        this.props.history.push('/');console.log(this.state);
+        this.props.history.push('/');
     }
 
     createOrEditComment = () => {

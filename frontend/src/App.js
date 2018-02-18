@@ -6,6 +6,7 @@ import Category from './Category/CategoryComponent';
 import Comment from './Comment/CommentComponent';
 import CreateEditPostComponent from './Post/CreateEditPostComponent';
 import CreateEditCommentComponent from './Comment/CreateEditCommentComponent';
+import CreateCommentComponent from './Comment/CreateCommentComponent';
 import {loadCategories} from './Category/Action';
 import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action';
 import {withRouter} from 'react-router';
@@ -62,17 +63,18 @@ class App extends Component {
                     )}/>
                     <Route exact path="/:category/:postId" render={({match}) => (
                         <div>
-                            <row>
-                                <Category
-                                    like={this.like}
-                                    dislike={this.dislike}
-                                    categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
-                                    posts={this.props.postReducer.posts
-                                        .filter(post => post.deleted === false)
-                                        .filter(post => post.id === match.params.postId)}
-                                    delete={this.delete}
-                                />
-                            </row>
+                            <Category
+                                like={this.like}
+                                dislike={this.dislike}
+                                categories={[this.props.categoryReducer.categories.find(category => category.name === match.params.category)]}
+                                posts={this.props.postReducer.posts
+                                    .filter(post => post.deleted === false)
+                                    .filter(post => post.id === match.params.postId)}
+                                delete={this.delete}
+                            />
+
+                            <CreateCommentComponent postId={match.params.postId}/>
+
                             <Col md={8} mdOffset={2}>
                                 <Comment postId={match.params.postId}/>
                             </Col>
