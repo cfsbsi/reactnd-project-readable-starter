@@ -45,7 +45,7 @@ export function updatePost(state) {
 export function likePost(post) {
     return function (dispatch){
         postVote(post.id, {option: 'upVote'}).then(
-            () => dispatch(updatePost({...post, voteScore: ++post.voteScore}))
+            (updatedPost) => dispatch(updatePost({post: updatedPost}))
         ).catch(error => {
             throw(error);
         });
@@ -55,7 +55,7 @@ export function likePost(post) {
 export function dislikePost(post) {
     return function (dispatch){
         postVote(post.id, {option: 'downVote'}).then(
-            () => dispatch(updatePost({...post, voteScore: --post.voteScore}))
+            (updatedPost) => dispatch(updatePost({post: updatedPost}))
         ).catch(error => {
             throw(error);
         });
@@ -79,7 +79,7 @@ export function deletePostSuccess(post) {
 export function editPost(body) {
     return function (dispatch) {
         update(body).then(post => {
-            dispatch(updatePost(post))
+            dispatch(updatePost({post}))
         }).catch(error => {
             throw(error);
         });

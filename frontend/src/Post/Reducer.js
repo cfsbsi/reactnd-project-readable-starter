@@ -10,8 +10,8 @@ function post(state = {posts: [], sortBy: 'voteScore'}, action) {
         case UPDATE_POST :
             return {
                 posts: state.posts.map(post => {
-                    if (post.id === action.state.id) {
-                        return action.state
+                    if (post.id === action.state.post.id) {
+                        return action.state.post
                     }
                     return post
                 }), sortBy: state.sortBy
