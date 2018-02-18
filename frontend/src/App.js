@@ -132,7 +132,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function sortByField(field) {
-    console.log(field === 'timestamp');
     if (field === 'timestamp') {
         return (post1, post2) => post1[field] - post2[field];
     } else {

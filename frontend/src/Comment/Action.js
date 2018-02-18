@@ -1,5 +1,6 @@
 import {LOAD_COMMENTS_SUCCESS, UPDATE_COMMENT, CREATE_COMMENT} from '../Utils/ActionTypes'
 import {fetchComments, delComment, commentVote, findComment, newComment, updateCommentApi} from '../Utils/Api'
+import {loadPosts} from '../Post/Action'
 import Uuid from 'uuid'
 
 export function loadComments(commentId) {
@@ -20,6 +21,8 @@ export function deleteComment(comment) {
     return function (dispatch) {
         delComment(comment.id).then(comment => {
             dispatch(deleteCommentSuccess(comment))
+        }).then(() => {
+            dispatch(loadPosts());
         }).catch(error => {
             throw(error);
         });
@@ -60,6 +63,8 @@ export function createComment(body) {
     return function (dispatch) {
         newComment(completeComment).then(comment => {
             dispatch(createCommentSuccess(comment))
+        }).then(() => {
+            dispatch(loadPosts());
         }).catch(error => {
             throw(error);
         });
