@@ -73,7 +73,7 @@ export function deletePost(post) {
 }
 
 export function deletePostSuccess(post) {
-    return updatePost({...post, deleted: true})
+    return updatePost({post: {...post, deleted: true}})
 }
 
 export function editPost(body) {

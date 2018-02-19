@@ -82,10 +82,6 @@ class CreateEditPostComponent extends React.Component {
     }
 
     render() {
-        if (!this.props.postReducer.posts || this.props.postReducer.posts.length === 0) {
-            return null;
-        }
-
         return this.props.commentNotFound ? (
             <div>
                 <h1>Post not found</h1>

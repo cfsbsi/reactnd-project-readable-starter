@@ -9,12 +9,16 @@ class CreateEditCommentComponent extends React.Component {
 
         if (this.props.pageTitle !== 'Create Comment') {
             this.props.getComment(this.props.commentId)
-                .then(comment => this.setState(comment));
+                .then(comment => this.setState(comment))
+                .catch((error) => {
+                    this.setState({error: true});
+                    console.log('Error on server', error)
+                });
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.postReducer.posts.length > 0){
+        if (nextProps.postReducer.posts.length > 0) {
             this.setState({parentId: nextProps.postReducer.posts[0].id})
         }
     }
@@ -28,7 +32,7 @@ class CreateEditCommentComponent extends React.Component {
             id: '',
             timestamp: 0,
             category: 'react',
-            commentNotFound: this.commentNotFound()
+            error: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +42,7 @@ class CreateEditCommentComponent extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        this.createOrEditComment()
+        this.createOrEditComment();
 
         this.props.history.push('/');
     }
@@ -65,23 +69,11 @@ class CreateEditCommentComponent extends React.Component {
         this.props.editComment(comment)
     }
 
-    commentNotFound = () => {
-
-        if (this.props.pageTitle === 'Create Comment') {
-            return false;
-        }
-
-        const commentFound = this.props.commentReducer.comments.find(comment => comment.id === this.props.commentId);
-
-        return commentFound ? false : true;
-
-    }
-
     render() {
 
-        return this.props.commentNotFound ? (
+        return this.state.error ? (
             <div>
-                <h1>Comment not found</h1>
+                <h1>Comment not found or error on server</h1>
             </div>
         ) : (
             <div>

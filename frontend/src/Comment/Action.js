@@ -71,10 +71,7 @@ export function createCommentSuccess(state) {
 }
 
 export function getComment(commentId) {
-    return findComment(commentId)
-        .catch(error => {
-            throw(error);
-        });
+    return findComment(commentId);
 }
 
 export function editComment(body) {

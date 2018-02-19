@@ -33,6 +33,11 @@ class App extends Component {
         this.props.deletePost(post);
     }
 
+    deleteOnPostPath = (post) => {
+        this.props.deletePost(post);
+        this.props.history.push('/');
+    }
+
     orderByDate = () => {
         this.props.orderBy('timestamp');
     }
@@ -70,7 +75,8 @@ class App extends Component {
                                 posts={this.props.postReducer.posts
                                     .filter(post => post.deleted === false)
                                     .filter(post => post.id === match.params.postId)}
-                                delete={this.delete}
+                                delete={this.deleteOnPostPath}
+                                showPostBody={true}
                             />
 
                             <CreateCommentComponent postId={match.params.postId}/>

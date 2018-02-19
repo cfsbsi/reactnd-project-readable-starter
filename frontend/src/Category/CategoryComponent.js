@@ -1,7 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import {Panel, Col} from 'react-bootstrap';
 import Confirmation from '../Confirmation/ConfirmationComponent'
+import Post from '../Post/PostComponent'
 
 class CategoryComponent extends React.Component {
 
@@ -43,22 +43,7 @@ class CategoryComponent extends React.Component {
                             this.props.posts.length > 0 &&
                             this.props.posts.map((post, index) => (
                                 <div key={index}>
-                                    <Link to={`${post.category}/${post.id}`}>
-                                        <h3>{post.title}</h3>
-                                    </Link>
-                                    <p>author: {post.author}</p>
-                                    <p>comments: {post.commentCount}</p>
-                                    <p>voteScore: {post.voteScore}</p>
-                                    <p>date: {new Date(post.timestamp).toString()}</p>
-                                    <button onClick={() => this.props.like(post)}
-                                            className="glyphicon glyphicon-thumbs-up"></button>
-                                    <button onClick={() => this.props.dislike(post)}
-                                            className="glyphicon glyphicon-thumbs-down"></button>
-                                    <Link to={`/posts/edit/${post.id}`}>
-                                        <button className="glyphicon glyphicon-pencil"></button>
-                                    </Link>
-                                    <button className="glyphicon glyphicon-trash" onClick={() => this.showModal(post)}>
-                                    </button>
+                                    <Post post={post} showBody={this.props.showPostBody} showModal={this.showModal}/>
                                 </div>
                             ))}
                         </Panel>

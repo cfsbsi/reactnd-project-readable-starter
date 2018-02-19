@@ -94,5 +94,11 @@ export const updateCommentApi = (comment) =>
 
 export function findComment(commentId) {
     return fetch(`http://${url}/comments/${commentId}`, {headers})
-        .then((res) => res.json())
+        .then(res => {
+            console.log(res.ok);
+            if(!res.ok) {
+                throw Error(res.statusText)
+            }
+            return res.json();
+        });
 }
