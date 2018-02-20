@@ -1,7 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {likePost, dislikePost} from '../Post/Action';
 
 class PostComponent extends React.Component {
+
+    like = (post) => {
+        this.props.likePost(post);
+    }
+
+    dislike = (post) => {
+        this.props.dislikePost(post);
+    }
 
     render() {
         const {post, showBody} = this.props;
@@ -15,9 +25,9 @@ class PostComponent extends React.Component {
                 <p>voteScore: {post.voteScore}</p>
                 {showBody?<p>body: {post.body}</p>: false}
                 <p>date: {new Date(post.timestamp).toString()}</p>
-                <button onClick={() => this.props.like(post)}
+                <button onClick={() => this.like(post)}
                         className="glyphicon glyphicon-thumbs-up"></button>
-                <button onClick={() => this.props.dislike(post)}
+                <button onClick={() => this.dislike(post)}
                         className="glyphicon glyphicon-thumbs-down"></button>
                 <Link to={`/posts/edit/${post.id}`}>
                     <button className="glyphicon glyphicon-pencil"></button>
@@ -29,4 +39,11 @@ class PostComponent extends React.Component {
     }
 }
 
-export default PostComponent
+function mapDispatchToProps(dispatch) {
+    return {
+        likePost: (post) => dispatch(likePost(post)),
+        dislikePost: (post) => dispatch(dislikePost(post)),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(PostComponent);

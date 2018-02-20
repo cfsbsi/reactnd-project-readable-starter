@@ -8,7 +8,7 @@ import CreateEditPostComponent from './Post/CreateEditPostComponent';
 import CreateEditCommentComponent from './Comment/CreateEditCommentComponent';
 import CreateCommentComponent from './Comment/CreateCommentComponent';
 import {loadCategories} from './Category/Action';
-import {loadPosts, likePost, dislikePost, deletePost, orderBy} from './Post/Action';
+import {loadPosts, deletePost, orderBy} from './Post/Action';
 import {withRouter} from 'react-router';
 import Menu from './Menu/MenuComponent';
 import SortButtons from './SortButtons/SortButtonsComponent';
@@ -19,14 +19,6 @@ class App extends Component {
     componentDidMount() {
         this.props.getCategories();
         this.props.getPosts();
-    }
-
-    like = (post) => {
-        this.props.likePost(post);
-    }
-
-    dislike = (post) => {
-        this.props.dislikePost(post);
     }
 
     delete = (post) => {
@@ -130,8 +122,6 @@ function mapDispatchToProps(dispatch) {
     return {
         getCategories: () => dispatch(loadCategories()),
         getPosts: () => dispatch(loadPosts()),
-        likePost: (post) => dispatch(likePost(post)),
-        dislikePost: (post) => dispatch(dislikePost(post)),
         deletePost: (post) => dispatch(deletePost(post)),
         orderBy: (field) => dispatch(orderBy(field))
     };
